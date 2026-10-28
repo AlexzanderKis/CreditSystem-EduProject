@@ -1,0 +1,3 @@
+To build docker images from public folder
+docker build -f CreditApplicationService/Dockerfile -t credit-application-service .
+docker build -f CreditProcessingService/Dockerfile -t credit-processing-service .

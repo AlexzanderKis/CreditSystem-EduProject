@@ -1,0 +1,34 @@
+### Создать заявку на кредит
+POST http://localhost:8080/api/credit-applications
+Content-Type: application/json
+
+{
+  "amount": 1000000,
+  "termMonths": 60,
+  "monthlyIncome": 300000,
+  "currentMonthlyCreditPayments": 190000,
+  "creditRating": 69
+}
+
+> {%
+    client.log("Response body: " + JSON.stringify(response.body));
+    client.log("Response body type: " + typeof response.body);
+
+    const id = response.body.Id;
+
+    client.log("Extracted ID: " + id);
+
+    client.assert(
+        id !== undefined && id !== null,
+        "POST response does not contain an id field"
+    );
+
+    client.global.set("applicationId", String(id));
+
+    client.log(
+        "Saved applicationId: " + client.global.get("applicationId")
+    );
+%}
+
+### Получить статус созданной заявки
+GET http://localhost:8080/api/credit-applications/{{applicationId}}
